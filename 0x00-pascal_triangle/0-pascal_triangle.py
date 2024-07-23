@@ -21,11 +21,14 @@ def pascal_triangle(n):
     """
     if n <= 0:
         return []
+
+    if n == 1:
+        return [[1]]
     
     output = [[1], [1, 1]]
     elements_to_add = 1
 
-    for i in range(2, n):
+    for _ in range(2, n):
         nxt_arr = [1]
         for j in range(elements_to_add):
             nxt_el = output[elements_to_add][j] + output[elements_to_add][j + 1]
