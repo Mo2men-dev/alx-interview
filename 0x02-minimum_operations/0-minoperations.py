@@ -1,58 +1,27 @@
 #!/usr/bin/python3
+""" Script that computes a minimum operations
+    needed in a CopyAll - Paste task
 """
-Minimum Operations Problem - Minimum Operations to Get N from 1
-"""
 
 
-def get_primes(n: int) -> list:
+def minOperations(n):
     """
-    Get all prime numbers from 1 to n
+    Method for compute the minimum number
+    of operations for task Copy All and Paste
+
     Args:
-        n: int - The number to get prime numbers from 1 to n
-    Returns:
-        list - A list of prime numbers from 1 to n
+        n: input value
+        factor_list: List to save the operations
+    Return: the sum of the operations
     """
-    primes = []
-    for i in range(1, n + 1):
-        dv_count = 0
-        for j in range(2, i + 1):
-            if i % j == 0:
-                dv_count += 1
-        if dv_count == 1:
-            primes.append(i)
-
-    return primes
-
-
-def prime_factor(n: int) -> list:
-    """
-    Get the prime factors of a number
-    Args:
-        n: int - The number to get the prime factors
-    Returns:
-        list - A list of prime factors of the number
-    """
-    primes = get_primes(n)
-    primed = n
-    factor = []
-
-    for i in primes:
-        while primed % i == 0:
-            factor.append(i)
-            primed = primed / i
-
-    return factor
-
-
-def minOperations(n: int) -> int:
-    """
-    Get the minimum operations to get n from 1
-    Args:
-        n: int - The number to get the minimum operations
-    Returns:
-        int - The minimum operations to get n from 1
-    """
-    if n <= 1:
+    if n < 2:
         return 0
-
-    return sum(prime_factor(n))
+    factor_list = []
+    i = 1
+    while n != 1:
+        i += 1
+        if n % i == 0:
+            while n % i == 0:
+                n /= i
+                factor_list.append(i)
+    return sum(factor_list)
