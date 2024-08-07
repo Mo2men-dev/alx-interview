@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
 Minimum Operations Problem - Minimum Operations to Get N from 1
 """
