@@ -52,4 +52,7 @@ def minOperations(n: int) -> int:
     Returns:
         int - The minimum operations to get n from 1
     """
+    if n <= 1:
+        return 0
+
     return sum(prime_factor(n))
