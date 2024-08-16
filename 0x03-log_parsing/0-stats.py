@@ -1,49 +1,39 @@
 #!/usr/bin/python3
-"""Log parsing"""
-
+"""
+Log parsing
+"""
 
 import sys
-import re
 
+if __name__ == '__main__':
 
-def log_parsing():
-    """Log parsing"""
-    reg = re.compile(r"""(\d+\.\d+\.\d+\.\d+) - \[([^\]]+)\] \"GET /projects/260 HTTP/1.1\" (\d+) (\d+)""")  # noqa
-    total_size = 0
-    status_codes = {
-        200: 0,
-        301: 0,
-        400: 0,
-        401: 0,
-        403: 0,
-        404: 0,
-        405: 0,
-        500: 0
-    }
-    line_count = 0
+    filesize, count = 0, 0
+    codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
+    stats = {k: 0 for k in codes}
 
-    for line in sys.stdin:
-        line_count += 1
-        match = reg.match(line)
+    def print_stats(stats: dict, file_size: int) -> None:
+        print("File size: {:d}".format(filesize))
+        for k, v in sorted(stats.items()):
+            if v:
+                print("{}: {}".format(k, v))
 
-        if match:
-            total_size += int(match.group(4))
-            status = int(match.group(3))
-
-            if status in status_codes:
-                status_codes[status] += 1
-
-        if line_count % 10 == 0:
-            print("File size: {}".format(total_size))
-            for key, value in sorted(status_codes.items()):
-                if value:
-                    print("{}: {}".format(key, value))
-
-    print("File size: {}".format(total_size))
-    for key, value in sorted(status_codes.items()):
-        if value:
-            print("{}: {}".format(key, value))
-
-
-if __name__ == "__main__":
-    log_parsing()
+    try:
+        for line in sys.stdin:
+            count += 1
+            data = line.split()
+            try:
+                status_code = data[-2]
+                if status_code in stats:
+                    stats[status_code] += 1
+            except BaseException:
+                pass
+            try:
+                filesize += int(data[-1])
+            except BaseException:
+                pass
+            if count % 10 == 0:
+                print_stats(stats, filesize)
+        print_stats(stats, filesize)
+    except KeyboardInterrupt:
+        print_stats(stats, filesize)
+        raise
