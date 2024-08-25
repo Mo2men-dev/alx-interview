@@ -45,7 +45,7 @@ def validUTF8(data: List[int]) -> bool:
     i = 0
 
     if len(data) == 0:
-        return False
+        return True
 
     while i < len(data):
         bytes = utf8_bytes(int(data[i]))
