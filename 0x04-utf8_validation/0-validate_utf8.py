@@ -43,11 +43,20 @@ def validUTF8(data: List[int]) -> bool:
     """
 
     i = 0
+
+    if len(data) == 0:
+        return True
+
     while i < len(data):
         bytes = utf8_bytes(int(data[i]))
         if bytes > 0:
             while (bytes > 0):
-                i += 1
+
+                if i + 1 < len(data):
+                    i += 1
+                else:
+                    return False
+
                 bn = int_to_bin(data[i])
 
                 if (bn[:2] != "10"):

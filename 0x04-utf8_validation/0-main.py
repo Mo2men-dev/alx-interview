@@ -5,14 +5,23 @@ Main file for testing
 
 validUTF8 = __import__('0-validate_utf8').validUTF8
 
-data1 = [226, 130, 172]
+data1 = [467, 133, 108]
 print(validUTF8(data1))
 
-data2 = [65]
+data2 = [240, 188, 128, 167]
 print(validUTF8(data2))
 
-data3 = [80, 121, 116, 104, 111, 110, 32, 105, 115, 32, 99, 111, 111, 108, 33]
+data3 = [235, 140]
 print(validUTF8(data3))
 
-data4 = [229, 65, 127, 256]
+data4 = [345, 467]
 print(validUTF8(data4))
+
+data5 = [250, 145, 145, 145, 145]
+print(validUTF8(data5))
+
+data6 = [0, 0, 0, 0, 0, 0]
+print(validUTF8(data6))
+
+data7 = []
+print(validUTF8(data7))
